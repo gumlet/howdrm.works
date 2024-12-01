@@ -11,6 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/shuding/nextra-docs-template.git"
   },
+  "type": "module",
   "author": "Shu Ding <g@shud.in>",
   "license": "MIT",
   "bugs": {
