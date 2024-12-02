@@ -1,7 +1,7 @@
 {
-  "name": "nextra-docs-template",
-  "version": "0.0.1",
-  "description": "Nextra docs template",
+  "name": "howdrm-works",
+  "version": "1.0.0",
+  "description": "A handbook on how audio and video DRM works.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shuding/nextra-docs-template.git"
+    "url": "git@github.com:gumlet/howdrm.works.git"
   },
   "type": "module",
-  "author": "Shu Ding <g@shud.in>",
+  "author": "Aditya Patadia",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/shuding/nextra-docs-template/issues"
+    "url": "https://github.com/gumlet/howdrm.works/issues"
   },
-  "homepage": "https://github.com/shuding/nextra-docs-template#readme",
+  "homepage": "https://howdrm.works",
   "dependencies": {
     "next": "^15.0.0",
     "nextra": "^3.0.0",
