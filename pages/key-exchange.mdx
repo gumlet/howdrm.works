@@ -1,0 +1,41 @@
+# Key Exchange Process
+
+As we saw above, creating encrypting and decrypting media in a file is actually trivial. It’s the security of the key that matters the most and we showcase how a DRM system ensures no user can obtain the key.
+
+## Player
+
+At the start of the process, the player obtains the HLS or DASH file which specifies that the attached MP4 or TS file is DRM encrypted. The player understands this and after getting the chunks of media file, it passes the chunk as well as the key server URL to CDM.
+
+Players like HLS.js on the web, AVPlayer on iOS or Exoplayer on Android are capable to identify DRM encrypted content and then talk with CDM. Once they pass media to CDM, they typically only receive updates on the process and have no control over how the rest of the flow is performed.
+
+## CDM
+
+The Content Decryption Module receives the key server URL and encrypted media file. This is how the next steps work. 
+
+Please note below process involves the use of [Public-key Cryptography](https://en.wikipedia.org/wiki/Public-key_cryptography). If you are not familiar, please read about Public-Private keys and asymmetric cryptography. Hint: It’s same kind of cryptography which is used in HTTPS protocol.
+
+1. Ask Key Server for the server certificate which is a signed public key. CDM can verify that it’s an authenticated Key Server by validating the authenticity of the public key.
+2. Once the public key is received, CDM prepares a payload which includes the following
+    1. The media file’s **content-id** (which is assigned by the streaming provider at the time of encrypting content)
+    2. Key-id (each encryption key is assigned a key-id using which the Key Server can find an actual key from the database)
+    3. CDM’s own public key (more on this below)
+    4. Information about media file (resolution, codec etc.) and information about CDM (version, device type etc.)
+3. The entire payload is encrypted using the public key received in Step 1 and sent to the Key Server as a POST request.
+4. Wait for server's response… ⏱️
+
+## Key Server
+
+The key server receives the encrypted payload and decrypts using its own private key. It gets all the things described in Step 2 above. Here is what the key server does:
+
+1. Verify CDM identity. It checks the CDM’s public key which it received and verifies its identity and also checks if the CDM is too old or its access is revoked. If the CDM is revoked or it’s not a valid one, it returns an error indicating the proper response code.
+2. Find the encryption key based on **content-id** and **key-id** provided in the payload.
+3. Encrypt the Key and other information about how to decode the media using the CDM’s public key provided.
+4. Send the encrypted payload back.
+
+** INSERT GRAPHIC EXPLAINING THIS**
+
+Once CDM receives the response it was waiting for, it can just decrypt the payload using its own private key and retrieve the media Key 🔑. yay!
+
+CDM now equipped with a Key and Encrypted media file, performs the task of decryption on its own and then passes the decrypted media to the display device. As this process typically happens inside a hardware chip, there is no scope for eavesdropping on it. The key is never stored anywhere and is discarded as soon as decryption is complete.
+
+Moreover, the decrypted chunks of media files are never stored or given to the video player.

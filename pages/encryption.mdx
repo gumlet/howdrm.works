@@ -1,0 +1,30 @@
+# Encryption
+
+The initial step when starting with DRM (video and audio) is to encrypt them first. There are multiple encryption methods which are possible.
+
+| Method | Full Sample Encryption | Subsample Pattern Encryption |
+| --- | --- | --- |
+| AES CTR | `cenc` | `cens` |
+| AES CBC | `cbc1` | `cbcs` |
+
+Only two of these protection schemes are relevant and being used for video and audio: `cenc` and `cbcs`. They are defined in confusingly similar named CENC ([Common Encryption Standard](https://www.iso.org/standard/84637.html)).
+
+Apple Fairplay and Google Widevine (the DRM systems for Apple and Google ecosystems) both support `cbcs`. Google Widevine also supports `cenc` but since Fairplay does not support it, most content providers have now switched to using `cbcs`. 
+
+## CBCS
+
+CBCS is an encryption method where the main encryption technology is CBC-AES128 ([Cipher Block Chaining](https://xilinx.github.io/Vitis_Libraries/security/2020.1/guide_L1/internals/cbc.html)). It’s symmetric encryption where fixed *KEY* and *IV* are required for both encryption and decryption.
+
+CBCS is a subsample encryption method which means only part of the video is encrypted. Wait WHAT?
+
+Yes, you read it correctly. The video is divided into 4 or 8-second chunks and only the first few bytes (typically 10% of the chunk) of the chunk are actually encrypted. The rest of the bytes are the same as before. This seems like a major lapse but it’s not. If those first bytes can’t be read, the rest of the chunk can’t be read. This is because the video itself is encoded using AVC or HEVC.
+
+The advantage of subsample encryption is that encryption and decryption are extremely fast and consume a lot less CPU resources (around 10% of resources compared to encrypting an entire file).
+
+**INSERT graphics of subsample encryption here**
+
+IV is [initialization vector](https://en.wikipedia.org/wiki/Initialization_vector) and it’s almost always openly shared when files are distributed. This means if anyone obtains the KEY 🔑, they can decrypt the media.
+
+Remember we described CBC-AES128 as symmetric key encryption? That means the same key must be used to encrypt AND decrypt the media. This means the *key* must be delivered to the viewer's device so they can somehow decode the media and view it on screen. If we never deliver the *key*, the viewer can never see the video or listen to the audio. It’s almost impossible to break AES128 encryption with current technology.
+
+If we want successful playback, our next job is to figure out some way to pass the key along with the video to the viewer. Here is where the DRM systems come into play. Let’s jump into different DRM systems.

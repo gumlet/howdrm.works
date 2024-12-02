@@ -1,0 +1,53 @@
+# DRM Systems
+
+## Plain-key Encryption
+
+The easiest way is to pass the key along with the video. This is called plain-key encryption. A key is included in the HLS or DASH playlist as a plain key or as a URI which points to a plain key. Here is an example of an HLS file where the key points to a URI `key.bin` where the key is stored.
+
+```
+#EXTM3U
+#EXT-X-VERSION:4
+#EXT-X-PLAYLIST-TYPE:VOD
+#EXT-X-INDEPENDENT-SEGMENTS
+#EXT-X-TARGETDURATION:6
+#EXT-X-MEDIA-SEQUENCE:0
+#EXT-X-KEY:METHOD=AES-128,URI="key.bin"
+#EXTINF:6.000000,
+segment-0.ts
+...
+#EXTINF:4.416667,
+segment-159.ts
+#EXT-X-ENDLIST
+```
+
+Web players often automatically detect this kind of encryption, fetch the key from a given URL and decrypt the video. This facilitates the playback of that media. If someone actually goes and downloads those `.mp4` or `.ts` files, they won’t be able to play them like normal files after downloading them. Mission successful right? Well, NO.
+
+This is more like putting your door key under the mat.
+
+![71Rq-SyrwsL._AC_UF894,1000_QL80_.jpg](/key-under-mat.jpg)
+
+If someone understands how this kind of encryption works (and now you are one of them) it’s pretty easy to fetch this key and decrypt the media. This means we successfully failed in our mission to protect the video or audio.
+
+We need to devise some clever way to deliver the key while making sure a sneaky person does not manage a way to find it. Enter the world of professional DRM systems
+
+## Widevine & Fairplay
+
+Apple Fairplay and Google Widevine are the most popular and widely supported DRM systems in the world right now. There was a system called Microsoft PlayReady but it was only used in Internet Explorer browsers and was phased out in favor of Google Widevine in Edge browsers.
+
+If you are on the Google ecosystem (aka Android, Chrome, Edge or even Firefox) you will be viewing your favourite movie on Netflix on Widevine.
+
+If you are in the Apple Ecosystem (iOS, MacOS, Safari browser or Apple TV) you will be using Fairplay. While these systems have their own implementation methods and protocols, the base premise is simple. They deliver the Key in a secure manner to your device so that you can’t sneak into any network payload and find that key. They both accomplish the task using components called Key Server and CDM (content decryption module).
+
+### Key server
+
+The key server is responsible to get request from clients (CDMs), verify CDM authenticity and then respond with the encrypted response (which has the key inside it) back to the CDM. This entire process happens on HTTPS protocol and typically POST request is used for this.
+
+### CDM (Content Decryption Module)
+
+It’s a client-side module which is responsible for talking with a media playback system (a player like HLS.js) and facilitating the content decryption as the name suggests. CDM takes in the encrypted MP4 or TS file and then coordinates with the Key Server to obtain the decryption key. Once it obtains the key, it decrypts the media file and then shows it on a display device like a monitor or TV screen.
+
+CDMs are typically implemented in hardware chips to make sure they can’t be tampered with or reverse-engineered. When a CDM is a hardware CDM, it’s impossible to get an unencrypted video or encryption key. All Apple devices use hardware CDM hence Fairplay provides the most secure DRM.
+
+Widevine also uses hardware CDM in most Android phones but there is one little catch with Chrome browser. Since Chrome browser runs on devices which Google has no direct control over, Chrome uses software CDM. This presents challenges where in past some people reverse-engineered the CDM to extract the key from CDM. It also presents some challenges where some software are able to screen-record the DRM-encrypted video. Most of these issues are patched quickly but it’s not a 100% perfect method.
+
+In the next section, we discuss how this entire flow of key exchange happens between the key server and the CDM.

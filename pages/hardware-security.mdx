@@ -1,0 +1,27 @@
+# Hardware Security
+
+We wrote above that decrypted content is directly streamed to the display device. It’s actually not that simple. If it’s simply sent over the wire to the display device a very advanced engineer can just plug that signal into a recorder and all of our effort to secure content will be in vain. 
+
+Another risk is screen recording software. If users can record Netflix movies using screen record, they can easily download and share them even if they never lay their hands on the encryption key.
+
+There are a couple of protection systems available to prevent this.
+
+## Screen Recording
+
+Almost all hardware CDMs also work with their operating systems to automatically detect screen recording and stop decrypting when the screen recorder is turned on. You can easily see this when you try to screen-record Netflix. It always shows a black screen.
+
+## HDCP
+
+High-bandwidth Digital Content Protection ([HDCP](https://en.wikipedia.org/wiki/High-bandwidth_Digital_Content_Protection)) is hardware device which encrypts the video when it’s delivered over HDMI, DVI or DisplayPort. This ensures that even if someone tries to feed signal to some recording device, it won’t work. Only a hardware-matched screen will be able to decrypt the content to show it. 
+
+We won’t delve into HDCP in this guide but there are resources available on the internet which explains this in detail.
+
+# Caveats
+
+We have described the system above as a system which works flawlessly. There are however some caveats where the DRM system fails to prevent content theft or just stops working and does not playback the media as intended.
+
+As we described in the CDM details, some software CDMs like the one in Chrome browser are susceptible to reverse engineering. While the current CDM in Chrome is very good it can be a risk factor for the future.
+
+Another risk is that software CDMs can’t always prevent screen recording as efficiently as hardware CDMs can. Chrome can’t always detect if any screen recording software is being used and hence sometimes fails to prevent recording of content.
+
+Last but not least, no one can prevent a human with a camera from recording the content that is being played on the screen. It’s going to be of low quality but still, the recording can be done and no DRM system can prevent it.

@@ -1,7 +1,11 @@
 export default {
   "index": "Introduction",
-  "another": "Another Page",
-  "advanced": "Advanced (A Folder)",
+  "history": "History",
+  "encryption": "Encryption",
+  "drm-systems": "DRM Systems",
+  "key-exchange": "Key Exchange Process",
+  "hardware-security": "Hardware Security",
+  "drm-gumlet": "DRM by Gumlet",
   "about": {
     "title": "About",
     "type": "page"
@@ -9,7 +13,7 @@ export default {
   "contact": {
     "title": "Contact ↗",
     "type": "page",
-    "href": "https://twitter.com/shuding_",
+    "href": "https://www.gumlet.com/contact/",
     "newWindow": true
   }
 }
