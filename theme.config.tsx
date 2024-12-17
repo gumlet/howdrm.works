@@ -35,7 +35,7 @@ const config: DocsThemeConfig = {
   footer: {
     content: (
       <>
-      <a href="https://nextra.site" target="_blank">
+      <a href="https://www.gumlet.com" target="_blank">
       <img src='https://assets.gumlet.io/assets/logo.svg' alt='Gumlet Logo' style={{ height: '1.5em' }} />
       </a>
       <span>
