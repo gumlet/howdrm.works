@@ -32,7 +32,7 @@ The key server receives the encrypted payload and decrypts using its own private
 3. Encrypt the Key and other information about how to decode the media using the CDM’s public key provided.
 4. Send the encrypted payload back.
 
-** INSERT GRAPHIC EXPLAINING THIS**
+![Key Exchange Process](/key-exchange.png)
 
 Once CDM receives the response it was waiting for, it can just decrypt the payload using its own private key and retrieve the media Key 🔑. yay!
 
