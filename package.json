@@ -20,7 +20,7 @@
   "homepage": "https://howdrm.works",
   "dependencies": {
     "@next/third-parties": "^15.1.0",
-    "next": "^15.0.0",
+    "next": "^15.1.3",
     "nextra": "^3.0.0",
     "nextra-theme-docs": "^3.2.4",
     "react": "^18.2.0",
