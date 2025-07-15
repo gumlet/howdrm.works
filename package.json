@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A handbook on how audio and video DRM works.",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start"
   },
@@ -21,13 +21,14 @@
   "dependencies": {
     "@next/third-parties": "^15.1.0",
     "next": "^15.2.3",
-    "nextra": "^3.0.0",
-    "nextra-theme-docs": "^3.2.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "nextra": "^4.0.0",
+    "nextra-theme-docs": "^4.0.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
+    "@types/react": "19.1.8",
     "typescript": "^5.7.0"
   }
 }

@@ -11,9 +11,8 @@ export default {
     "type": "page"
   },
   "contact": {
-    "title": "Contact ↗",
+    "title": "Contact",
     "type": "page",
-    "href": "https://www.gumlet.com/contact/",
-    "newWindow": true
+    "href": "https://www.gumlet.com/contact/"
   }
 }
