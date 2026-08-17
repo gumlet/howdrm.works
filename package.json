@@ -20,8 +20,8 @@
   },
   "homepage": "https://howdrm.works",
   "dependencies": {
-    "@next/third-parties": "^15.1.0",
-    "next": "^15.5.22",
+    "@next/third-parties": "^16.3.1",
+    "next": "^16.3.1",
     "nextra": "^4.0.0",
     "nextra-theme-docs": "^4.0.0",
     "react": "^19.1.0",
